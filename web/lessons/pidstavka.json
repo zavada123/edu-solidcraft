@@ -1,0 +1,87 @@
+{
+  "title": "Урок 2. Перший ескіз: підставка під чашку",
+  "finish": "Готово: у тебе справжня деталь із ескізу, розміру й видавлювання. Так починається майже кожна модель в інженерному CAD.",
+  "tabs": [
+    "MODEL"
+  ],
+  "keys": [
+    "sketch.circle.center",
+    "sketch.dimension",
+    "solid.extrude"
+  ],
+  "steps": [
+    {
+      "task": "Кожна деталь починається з ескізу. Натисни **Новий ескіз** і клацни по горизонтальній площині **XY**.",
+      "check": {
+        "type": "sketch_active"
+      },
+      "highlight": [
+        "toolbar:sketch.create"
+      ]
+    },
+    {
+      "task": "Вибери **Коло**. Клацни в початок координат (центр сітки), відведи мишу й клацни ще раз.",
+      "hint": "Коло можна вибрати й клавішею [k]C[/k].",
+      "check": {
+        "type": "sketch_curves",
+        "min": 1,
+        "profiles": 1
+      },
+      "highlight": [
+        "toolbar:sketch.circle.center"
+      ]
+    },
+    {
+      "task": "Задай точний розмір: натисни **Розмір**, клацни по колу, введи **90** і натисни [k]Enter[/k].",
+      "hint": "Коли ескіз повністю визначений, у ньому немає жодної «вільної» лінії. Якщо крок не зараховується, перевір, що центр кола в початку координат.",
+      "check": {
+        "type": "all",
+        "checks": [
+          {
+            "type": "dimension_value",
+            "value": 90
+          },
+          {
+            "type": "sketch_defined"
+          }
+        ]
+      },
+      "highlight": [
+        "toolbar:sketch.dimension"
+      ]
+    },
+    {
+      "task": "Ескіз готовий. Натисни **Завершити ескіз**.",
+      "check": {
+        "type": "sketch_finished"
+      },
+      "highlight": [
+        "toolbar:sketch.finish"
+      ]
+    },
+    {
+      "task": "Тепер зробимо з кола тіло. Натисни **Видавлювання**.",
+      "check": {
+        "type": "dialog_open",
+        "command": "solid.extrude"
+      },
+      "highlight": [
+        "toolbar:solid.extrude"
+      ]
+    },
+    {
+      "task": "Введи відстань **4 mm** і натисни **OK**. Підставка товщиною 4 мм готова!",
+      "check": {
+        "type": "body",
+        "count": 1,
+        "size": [
+          90,
+          90,
+          4
+        ],
+        "volume": 25446.9,
+        "volume_tolerance_pct": 1
+      }
+    }
+  ]
+}

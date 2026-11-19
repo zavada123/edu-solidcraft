@@ -1,0 +1,521 @@
+:root {
+  --bg: #f6f7f9;
+  --panel: #ffffff;
+  --text: #1d232b;
+  --muted: #5b6573;
+  --line: #dde2e8;
+  --accent: #2f6fde;
+  --ok: #1d8a4c;
+  --no: #b3402f;
+  --ring: #ffb020;
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+a {
+  color: var(--accent);
+}
+
+/* Список уроків */
+.home {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 16px 48px;
+}
+
+.home h1 {
+  margin: 0 0 8px;
+  font-size: 32px;
+}
+
+.lead {
+  color: var(--muted);
+  margin: 0 0 24px;
+}
+
+.lesson-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+  display: grid;
+  gap: 8px;
+}
+
+.lesson-list a {
+  display: block;
+  padding: 14px 16px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.lesson-list a:hover {
+  border-color: var(--accent);
+}
+
+.lesson-list li.done a::after {
+  content: ' ✓';
+  color: var(--ok);
+}
+
+.note,
+.credits {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* Урок: редактор на весь екран, картка уроку плаває над 3D-видом унизу ліворуч.
+   Так стрічка SolidCraft має всю ширину і не ховає кнопки в списки на екрані 1366 px. */
+.lesson {
+  position: relative;
+  height: 100vh;
+}
+
+.lesson[hidden],
+.home[hidden] {
+  display: none;
+}
+
+.panel {
+  position: absolute;
+  z-index: 2;
+  left: 12px;
+  bottom: 52px;
+  width: 330px;
+  max-height: calc(100% - 200px);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.35);
+  padding: 14px 16px;
+  overflow-y: auto;
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.collapse {
+  padding: 2px 10px;
+  font-size: 14px;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+
+.panel.collapsed .panel-body {
+  display: none;
+}
+
+.panel h1 {
+  font-size: 18px;
+  margin: 6px 0 10px;
+}
+
+.back {
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.step-count {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.progress {
+  height: 6px;
+  background: var(--line);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+  transition: width 0.3s;
+}
+
+.task {
+  font-size: 17px;
+  margin: 0 0 12px;
+}
+
+.task strong,
+.hint strong {
+  color: #0b4fbf;
+}
+
+kbd {
+  display: inline-block;
+  padding: 0 6px;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  font: 600 14px/1.5 ui-monospace, monospace;
+  background: var(--bg);
+}
+
+.hint {
+  font-size: 14px;
+  color: var(--muted);
+  border-left: 3px solid var(--line);
+  padding-left: 10px;
+}
+
+.answer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.answer input {
+  width: 110px;
+  font-size: 16px;
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+.status {
+  min-height: 24px;
+  margin: 0 0 12px;
+  font-weight: 600;
+}
+
+.status.ok {
+  color: var(--ok);
+}
+
+.status.no {
+  color: var(--no);
+}
+
+button,
+.button {
+  display: inline-block;
+  font: inherit;
+  font-weight: 600;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.finish-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ok);
+  margin: 0 0 8px;
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+}
+
+.stage iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #343840;
+}
+
+/* Шар підсвітки над редактором: не перехоплює мишу. */
+.highlight-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hl-ring {
+  position: absolute;
+  border: 3px solid var(--ring);
+  border-radius: 12px;
+  box-shadow: 0 0 0 3px rgb(255 176 32 / 0.35);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    box-shadow: 0 0 0 8px rgb(255 176 32 / 0.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hl-ring {
+    animation: none;
+  }
+}
+
+.loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #343840;
+  color: #e9edf2;
+  text-align: center;
+  padding: 16px;
+}
+
+.loading[hidden] {
+  display: none;
+}
+
+/* Телефон і вузький екран: картка уроку на всю ширину внизу. */
+@media (max-width: 800px) {
+  .panel {
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    width: auto;
+    max-height: 45vh;
+  }
+}
+
+[hidden] {
+  display: none;
+}
+
+.panel {
+  position: absolute;
+  z-index: 2;
+  left: 12px;
+  bottom: 52px;
+  width: 330px;
+  max-height: calc(100% - 200px);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.35);
+  padding: 14px 16px;
+  overflow-y: auto;
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.collapse {
+  padding: 2px 10px;
+  font-size: 14px;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+
+.panel.collapsed .panel-body {
+  display: none;
+}
+
+.panel h1 {
+  font-size: 18px;
+  margin: 6px 0 10px;
+}
+
+.back {
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.step-count {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.progress {
+  height: 6px;
+  background: var(--line);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+  transition: width 0.3s;
+}
+
+.task {
+  font-size: 17px;
+  margin: 0 0 12px;
+}
+
+.task strong,
+.hint strong {
+  color: #0b4fbf;
+}
+
+kbd {
+  display: inline-block;
+  padding: 0 6px;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  font: 600 14px/1.5 ui-monospace, monospace;
+  background: var(--bg);
+}
+
+.hint {
+  font-size: 14px;
+  color: var(--muted);
+  border-left: 3px solid var(--line);
+  padding-left: 10px;
+}
+
+.answer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.answer input {
+  width: 110px;
+  font-size: 16px;
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+.status {
+  min-height: 24px;
+  margin: 0 0 12px;
+  font-weight: 600;
+}
+
+.status.ok {
+  color: var(--ok);
+}
+
+.status.no {
+  color: var(--no);
+}
+
+button,
+.button {
+  display: inline-block;
+  font: inherit;
+  font-weight: 600;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.finish-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ok);
+  margin: 0 0 8px;
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+}
+
+.stage iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #343840;
+}
+
+/* Шар підсвітки над редактором: не перехоплює мишу. */
+.highlight-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hl-ring {
+  position: absolute;
+  border: 3px solid var(--ring);
+  border-radius: 12px;
+  box-shadow: 0 0 0 3px rgb(255 176 32 / 0.35);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    box-shadow: 0 0 0 8px rgb(255 176 32 / 0.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hl-ring {
+    animation: none;
+  }
+}
+
+.loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #343840;
+  color: #e9edf2;
+  text-align: center;
+  padding: 16px;
+}
+
+.loading[hidden] {
+  display: none;
+}
+
+/* Телефон і вузький екран: панель над редактором. */
+@media (max-width: 800px) {
+  .lesson {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .panel {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    max-height: 45vh;
+  }
+}
+
+[hidden] {
+  display: none !important;
+}

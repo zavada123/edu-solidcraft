@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Інженерне 3D: уроки в SolidCraft</title>
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="js/main.js"></script>
+  </head>
+  <body>
+    <section id="home" class="home" hidden>
+      <h1>Інженерне 3D</h1>
+      <p class="lead">
+        Справжній параметричний CAD просто в браузері: ескізи, розміри, видавлювання й історія операцій.
+        Уроки з перевіркою кроків для 9–11 класів.
+      </p>
+      <ol id="lesson-list" class="lesson-list"></ol>
+      <p class="free"><a href="?lesson=free">Вільний режим</a>: редактор без завдань.</p>
+      <p class="note">
+        Потрібен комп'ютер із мишею. Перше відкриття завантажує редактор (близько 60 МБ), далі він береться з кешу.
+      </p>
+      <p class="credits">
+        Редактор: <a href="https://github.com/tangency-labs/solidcraft" rel="noopener">SolidCraft</a>
+        (MIT або Apache 2.0, назва й вигляд за ліцензією бренду SolidCraft). Уроки:
+        <a href="https://github.com/zavada123/edu-solidcraft" rel="noopener">edu-solidcraft</a>.
+      </p>
+    </section>
+
+    <section id="lesson" class="lesson" hidden>
+      <div class="stage">
+        <iframe id="editor" title="Редактор SolidCraft"></iframe>
+        <div id="highlight-layer" class="highlight-layer" aria-hidden="true"></div>
+        <div id="loading" class="loading" role="status">
+          <p id="loading-text">Завантажуємо редактор…</p>
+        </div>
+      </div>
+      <aside id="panel" class="panel" aria-live="polite">
+        <div class="panel-head">
+          <a class="back" href="./">← Усі уроки</a>
+          <button id="collapse" class="collapse" type="button" aria-expanded="true">Згорнути</button>
+        </div>
+        <div class="panel-body">
+        <h1 id="lesson-title"></h1>
+        <div id="step-box" class="step" hidden>
+          <p id="step-count" class="step-count"></p>
+          <div class="progress" aria-hidden="true"><div id="step-progress" class="progress-fill"></div></div>
+          <p id="step-task" class="task"></p>
+          <p id="step-hint" class="hint" hidden></p>
+          <label id="answer-box" class="answer" hidden>
+            <span>Відповідь:</span>
+            <input id="answer" type="number" inputmode="decimal" step="any" />
+            <span id="answer-unit"></span>
+          </label>
+          <p id="step-status" class="status"></p>
+          <button id="check" type="button">Перевірити</button>
+        </div>
+        <div id="finish-box" class="finish" hidden>
+          <p class="finish-title">Урок пройдено!</p>
+          <p id="finish-text"></p>
+          <a id="next-lesson" class="button" href="./">До уроків</a>
+        </div>
+        <p id="free-text" class="task" hidden>
+          Вільний режим: усі інструменти відкриті, завдань і перевірок немає.
+        </p>
+        </div>
+      </aside>
+    </section>
+  </body>
+</html>
